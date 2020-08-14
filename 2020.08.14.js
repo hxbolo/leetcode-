@@ -65,16 +65,40 @@ var merge = function (nums1, m, nums2, n) {
  * @return {number[]}
  */
 var addToArrayForm = function (A, K) {
-  let num = BigInt(A.join("")) + BigInt(K);
-  let arr = String(num).split("");
+  // let num = BigInt(A.join("")) + BigInt(K);
+  // let arr = String(num).split("");
 
-  return arr;
+  // return arr;
+
+  const klen = String(K).length;
+  const alen = A.length;
+  if (alen >= klen + 1) {
+    let tmp = A.splice(-(klen + 1));
+    let ts = String(Number(tmp.join("")) + K)
+      .split("")
+      .map((i) => +i);
+      console.log(ts,tmp);
+      
+    if (ts.length == klen && tmp[0] === 0) {
+      ts.unshift(0);
+      return A.concat(ts);
+    } else if (ts.length > tmp.length) {
+      return addToArrayForm(A, ts[0])?.concat(ts.slice(1));
+    } else if (ts.length === tmp.length) {
+      return A.concat(ts);
+    }
+  } else if (klen >= alen) {
+    return String(Number(A.join("")) + K)
+      .split("")
+      .map((i) => +i);
+  }
+  return A;
 };
 
-// addToArrayForm(
-//   [1, 2, 6, 3, 0, 7, 1, 7, 1, 9, 7, 5, 6, 6, 4, 4, 0, 0, 6, 3],
-//   516
-// );
+addToArrayForm(
+  [1, 2, 6, 3, 0, 7, 1, 7, 1, 9, 7, 5, 6, 6, 4, 4, 0, 0, 6, 3],
+  516
+);
 
 // 给你一个整数数组 arr，请你检查是否存在两个整数 N 和 M，满足 N 是 M 的两倍（即，N = 2 * M）。
 
@@ -136,4 +160,4 @@ var compressString = function (S) {
   console.log(count);
   return S.length <= str.length ? S : str;
 };
-console.log(compressString("aabcccccaaa"));
+// console.log(compressString("aabcccccaaa"));
