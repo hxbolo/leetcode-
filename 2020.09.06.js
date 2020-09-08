@@ -21,3 +21,5 @@ var addDigits = function (num) {
   return sum < 9 ? sum : addDigits(sum);
 };
 console.log(addDigits(1));
+
+
