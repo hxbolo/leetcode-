@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script> -->
+    <script type="text/javascript" src="../node_modules/jquery/dist/jquery.js"></script>
+</head>
+
+<body>
+
+<p><span class="remainedTime-diffTime">3605000</span></p>
+<p><span class="remainedTime-diffTime">36050000</span></p>
+    
+<script>
+    function remainedTimeAct (cls,str_format){ // d,h,m,s
+        var startTime_1 = new Date(2020,1,20,12,00,00);
+        var endTime_1   = new Date(2020,1,20,13,00,05);
+        var testTime = endTime_1.getTime() - startTime_1.getTime();
+        console.log(testTime)
+        var ary_format = str_format.split(',');
+        $(cls).each(function(){
+            (function (that){
+                var diffTime = parseInt(that.text()), //时间差，毫秒
+                    obj_time = {},
+                    d, h, m, s, clearT;
+                function soCount(){
+                    d = Math.floor(diffTime/1000/60/60/24);
+                    h = Math.floor(diffTime/1000/60/60) % 24;
+                    m = Math.floor(diffTime/1000/60) % 60;
+                    s = Math.floor(diffTime/1000) % 60;
+
+                    obj_time.d = '<span class="day">' + d + '天</span>';
+                    obj_time.h = '<span class="hour">' + (h.toString().length == 1 ? '0' + h : h) + '小时</span>';
+                    obj_time.m = '<span class="minute">' + (m.toString().length == 1 ? '0' + m : m) + '分</span>';
+                    obj_time.s = '<span class="second">' + (s.toString().length == 1 ? '0' + s : s) + '秒</span>';
+
+                    var html = '';
+                    for(var i = 0, len = ary_format.length; i < len; i++){
+                        html += obj_time[ary_format[i]];
+                    }
+                    that.html(html);
+                    diffTime -= 1000;
+                    clearT = setTimeout(soCount,1000);
+                    if(diffTime < 0){
+                        clearTimeout(clearT);
+                        that.html('已超时');
+                    }
+                }
+                soCount();
+            })($(this));
+        });
+
+    }
+
+    remainedTimeAct('.remainedTime-diffTime','d,h,m,s')
+</script>
+</body>
+
+</html>
