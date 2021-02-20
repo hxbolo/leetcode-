@@ -51,13 +51,18 @@ var buddyStrings = function (A, B) {
   let cunt = 0
   let arr = []
   let obj = {}
+
   if(A.length == B.length){
+   
+
     for(let i  = 0; i< A.length; i++){
       if(A[i] != B[i]){
         cunt++
         obj[i] = A[i]
       }
-      if(cunt > 2)return false
+      if(cunt > 2 || cunt== 0){
+        return  A.length > new Set(A).size
+      }
     }
     if(cunt <= 2) {
       console.log( obj);
@@ -71,4 +76,4 @@ var buddyStrings = function (A, B) {
 
 };
 
-console.log(buddyStrings("ab", "ab"));
+console.log(buddyStrings("aaaaaaaaabc", "aaaaaaaaacb"));
