@@ -34,6 +34,7 @@ const argText = function(Fn, ...argument){
   const obj = {}
   // this指向这构造函数
   const result = Fn.call(obj, ...argument)
+
 // 3.如果该构造函数的返回值是Object类型则返回该对象
   if(result instanceof Object){
     return result
